@@ -1,0 +1,27 @@
+LMA COMMUNICATIONS LICENSE AGREEMENT
+
+Copyright (c) 2026 Jared De Santis.
+All Rights Reserved.
+
+Permission is granted to view, study, and evaluate this software and its source code for personal, educational, and non-commercial reference purposes only.
+
+You may NOT:
+
+- Copy substantial portions of the source code
+- Modify the source code for redistribution
+- Repackage or redistribute the application
+- Sell or sublicense the application
+- Create derivative commercial works from the codebase
+- Remove attribution notices
+- Mirror or republish the source code publicly without written permission
+
+Commercial use, redistribution, modification, sublicensing, or deployment of modified versions requires explicit written permission from the copyright holder.
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
+
+For licensing inquiries or permissions, contact:
+
+Jared De Santis
+support@limitless-mobile-applications.com

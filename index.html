@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LMA Communications</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <div class="brand">
+        <div class="logo">LMA</div>
+        <div>
+          <h1>LMA Communications</h1>
+          <p>P2P encrypted video calling • STUN-only V1</p>
+        </div>
+      </div>
+      <div id="status" class="status">Loading…</div>
+    </section>
+
+    <section id="authPanel" class="panel">
+      <h2>Member Access</h2>
+      <p class="muted">Create an account or sign in to start an invite-only P2P session.</p>
+
+      <label>Name</label>
+      <input id="displayName" type="text" placeholder="Your name" autocomplete="name" />
+
+      <label>Email</label>
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+
+      <div class="row">
+        <button id="signUpBtn">Create Account</button>
+        <button id="signInBtn" class="secondary">Sign In</button>
+      </div>
+
+      <button id="resetBtn" class="linklike">Send password reset email</button>
+    </section>
+
+    <section id="roomPanel" class="panel hidden">
+      <div class="topline">
+        <div>
+          <h2>Private Room</h2>
+          <p id="userLine" class="muted"></p>
+        </div>
+        <button id="signOutBtn" class="danger secondary">Sign Out</button>
+      </div>
+
+      <div class="row">
+        <button id="createRoomBtn">Create Invite Room</button>
+        <input id="inviteCode" type="text" placeholder="Invite code" />
+        <button id="joinRoomBtn" class="secondary">Join</button>
+      </div>
+
+      <div id="roomInfo" class="room-info hidden">
+        <p><strong>Room:</strong> <span id="roomCodeText"></span></p>
+        <button id="copyInviteBtn" class="secondary">Copy Invite Link</button>
+      </div>
+    </section>
+
+    <section id="callPanel" class="panel hidden">
+      <div class="topline">
+        <div>
+          <h2>Video Session</h2>
+          <p id="presenceLine" class="muted">Waiting for peer…</p>
+        </div>
+        <div class="pill">Direct P2P Attempt</div>
+      </div>
+
+      <div class="videos">
+        <div class="video-card">
+          <video id="localVideo" autoplay muted></video>
+          <span>You</span>
+        </div>
+        <div class="video-card">
+          <video id="remoteVideo" autoplay></video>
+          <span>Remote Peer</span>
+        </div>
+      </div>
+
+      <div class="row controls">
+        <button id="startMediaBtn">Start Camera</button>
+        <button id="callBtn" class="secondary">Call Peer</button>
+        <button id="hangUpBtn" class="danger">Hang Up</button>
+      </div>
+
+      <pre id="log"></pre>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
