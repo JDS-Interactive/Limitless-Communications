@@ -64,7 +64,20 @@ function showSignedOut() {
   setStatus("Signed out");
 }
 
+function userEmailVerified(user) {
+  return Boolean(user?.email_confirmed_at || user?.confirmed_at);
+}
+
 function showSignedIn(user) {
+  if (!userEmailVerified(user)) {
+    els.authPanel.classList.remove("hidden");
+    els.roomPanel.classList.add("hidden");
+    els.callPanel.classList.add("hidden");
+    setStatus("Please verify your email");
+    alert("Please verify your email before using LMA Communications.");
+    return;
+  }
+
   els.authPanel.classList.add("hidden");
   els.roomPanel.classList.remove("hidden");
   els.callPanel.classList.add("hidden");
@@ -106,11 +119,16 @@ els.signUpBtn.addEventListener("click", async () => {
     });
     if (error) throw error;
 
-    if (data.user) {
-      await ensureProfile(data.user, displayName);
+    if (data.user && !data.session) {
+      alert("Account created. Please check your email and confirm your account before signing in.");
+      return;
     }
 
-    alert("Account created. Check your email if confirmation is enabled.");
+    if (data.session?.user) {
+      currentUser = data.session.user;
+      await ensureProfile(currentUser, displayName);
+      showSignedIn(currentUser);
+    }
   } catch (err) {
     alert(err.message);
   }
