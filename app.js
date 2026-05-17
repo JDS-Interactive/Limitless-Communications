@@ -151,9 +151,19 @@ els.resetBtn.addEventListener("click", async () => {
 });
 
 els.signOutBtn.addEventListener("click", async () => {
-  await hangUp();
+  await hangUp(false);
+
+  currentRoom = null;
+
+  if (roomChannel) {
+    await supabase.removeChannel(roomChannel);
+    roomChannel = null;
+  }
+
   await supabase.auth.signOut();
+
   currentUser = null;
+
   showSignedOut();
 });
 
@@ -411,21 +421,60 @@ async function handleSignal(signal) {
 els.hangUpBtn.addEventListener("click", () => hangUp(true));
 
 async function hangUp(notifyPeer = true) {
-  if (notifyPeer && currentRoom) {
-    sendSignal({ type: "hang-up", to: peerUserId || undefined });
-  }
+  try {
+    if (notifyPeer && currentRoom) {
+      sendSignal({
+        type: "hang-up",
+        to: peerUserId || undefined
+      });
+    }
 
-  if (peerConnection) {
-    peerConnection.close();
-    peerConnection = null;
-  }
+    // Close peer connection
+    if (peerConnection) {
+      peerConnection.ontrack = null;
+      peerConnection.onicecandidate = null;
+      peerConnection.onconnectionstatechange = null;
 
-  if (els.remoteVideo.srcObject) {
-    els.remoteVideo.srcObject.getTracks().forEach((track) => track.stop());
-    els.remoteVideo.srcObject = null;
-  }
+      peerConnection.close();
+      peerConnection = null;
+    }
 
-  setStatus(currentRoom ? `In room ${currentRoom.invite_code}` : "Ready");
+    // Stop remote media
+    if (els.remoteVideo.srcObject) {
+      els.remoteVideo.srcObject.getTracks().forEach(track => {
+        track.stop();
+      });
+
+      els.remoteVideo.srcObject = null;
+    }
+
+    // Stop local media
+    if (localStream) {
+      localStream.getTracks().forEach(track => {
+        track.stop();
+      });
+
+      localStream = null;
+    }
+
+    // Clear local preview
+    if (els.localVideo.srcObject) {
+      els.localVideo.srcObject = null;
+    }
+
+    peerUserId = null;
+
+    setStatus(
+      currentRoom
+        ? `In room ${currentRoom.invite_code}`
+        : "Ready"
+    );
+
+    log("Call ended.");
+  }
+  catch (err) {
+    console.error(err);
+  }
 }
 
 async function init() {
